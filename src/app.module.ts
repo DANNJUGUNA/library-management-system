@@ -7,10 +7,11 @@ import { BooksService } from './books/books.service';
 import { MembersController } from './members/members.controller';
 import { MembersService } from './members/members.service';
 import { MembersModule } from './members/members.module';
+import { AuthorsModule } from './authors/authors.module';
 
 @Module({
-  imports: [BooksModule, MembersModule],
+  imports: [BooksModule, MembersModule, AuthorsModule],
   controllers: [AppController, BooksController, MembersController],
-  providers: [AppService,BooksService, MembersService],
+  providers: [AppService, BooksService, MembersService],
 })
 export class AppModule {}
