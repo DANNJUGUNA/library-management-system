@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 
@@ -33,11 +37,15 @@ export class AuthorsService {
   ];
 
   getAllAuthors() {
+    if (this.Authors.length === 0) {
+      throw new NotAcceptableException('There are no Authors');
+    }
     return this.Authors;
   }
 
   getAuthorById(id: number) {
     const author = this.Authors.find((author) => author.id === id);
+    if (!author) throw new NotFoundException('Author not Found');
     return author;
   }
   addAuthor(createAuthorDto: CreateAuthorDto) {

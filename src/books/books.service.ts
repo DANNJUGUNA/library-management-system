@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
@@ -37,11 +41,15 @@ export class BooksService {
     },
   ];
   getAllBooks() {
+    if (this.Books.length === 0) {
+      throw new NotAcceptableException('There are no Books');
+    }
     return this.Books;
   }
 
   getBooksById(id: number) {
     const book = this.Books.find((book) => book.id === id);
+    if (!book) throw new NotFoundException('Book Not Found');
     return book;
   }
   addBook(createBookDto: CreateBookDto) {
